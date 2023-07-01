@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
+import Home from './Pages/Home';
+import Favourites from './Pages/Favourites';
+import NotFound from './Pages/NotFound';
+import Navbar from './Components/Navbar';
+import { useState } from 'react';
 
 function App() {
+  const [contacts,setContacts]=useState([])
+
+  const formSub=(data)=>{
+    //  console.log(data);
+     setContacts([...contacts,data])
+  }
+  console.log(contacts,'contact');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar/>
+    
+     <Routes>
+      <Route path='/' element={<Home formSub={formSub} contacts={contacts}/>}></Route>
+      <Route path='/favourite' element={<Favourites/>}></Route>
+      <Route path='*' element={<NotFound/>}></Route>
+     </Routes>
+    
+    </BrowserRouter>
   );
 }
 
